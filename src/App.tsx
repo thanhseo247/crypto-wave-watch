@@ -10,6 +10,10 @@ import Bitcoin from "./pages/Bitcoin";
 import Ethereum from "./pages/Ethereum";
 import Altcoins from "./pages/Altcoins";
 import Markets from "./pages/Markets";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +31,10 @@ const App = () => (
           <Route path="/ethereum" element={<Ethereum />} />
           <Route path="/altcoins" element={<Altcoins />} />
           <Route path="/markets" element={<Markets />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
