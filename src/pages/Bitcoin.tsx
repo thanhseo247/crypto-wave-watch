@@ -1,7 +1,7 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
+import BitcoinMoreSection from "@/components/BitcoinMoreSection";
 import { TrendingUp, TrendingDown } from "lucide-react";
 
 const Bitcoin = () => {
@@ -91,6 +91,8 @@ const Bitcoin = () => {
           ))}
         </div>
       </div>
+
+      <BitcoinMoreSection />
 
       <Footer />
     </div>

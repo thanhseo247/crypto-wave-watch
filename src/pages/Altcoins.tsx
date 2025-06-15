@@ -1,7 +1,7 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
+import AltcoinsMoreSection from "@/components/AltcoinsMoreSection";
 import { Badge } from "@/components/ui/badge";
 
 const Altcoins = () => {
@@ -99,6 +99,8 @@ const Altcoins = () => {
           ))}
         </div>
       </div>
+
+      <AltcoinsMoreSection />
 
       <Footer />
     </div>

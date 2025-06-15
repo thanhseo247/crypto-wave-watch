@@ -1,7 +1,7 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
+import EthereumMoreSection from "@/components/EthereumMoreSection";
 import { TrendingUp } from "lucide-react";
 
 const Ethereum = () => {
@@ -91,6 +91,8 @@ const Ethereum = () => {
           ))}
         </div>
       </div>
+
+      <EthereumMoreSection />
 
       <Footer />
     </div>

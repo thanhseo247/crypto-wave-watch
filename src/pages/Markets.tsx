@@ -1,7 +1,7 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
+import MarketsMoreSection from "@/components/MarketsMoreSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp, TrendingDown } from "lucide-react";
 
@@ -130,6 +130,8 @@ const Markets = () => {
           ))}
         </div>
       </div>
+
+      <MarketsMoreSection />
 
       <Footer />
     </div>
