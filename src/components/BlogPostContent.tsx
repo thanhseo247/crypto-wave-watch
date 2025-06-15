@@ -25,7 +25,7 @@ const BlogPostContent = ({ postId }: BlogPostContentProps) => {
     content: wpPost.content.rendered,
     author: {
       name: wpPost._embedded?.author?.[0]?.name || "Unknown Author",
-      avatar: wpPost._embedded?.author?.[0]?.avatar_urls?.96 || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+      avatar: wpPost._embedded?.author?.[0]?.avatar_urls?.["96"] || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
       bio: "WordPress Author",
       twitter: "@author"
     },
