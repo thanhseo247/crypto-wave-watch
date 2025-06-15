@@ -46,7 +46,7 @@ interface WordPressAPIConfig {
 
 // Default to a demo WordPress site - user can change this
 const DEFAULT_CONFIG: WordPressAPIConfig = {
-  baseUrl: 'https://demo.wp-api.org/wp-json/wp/v2',
+  baseUrl: 'https://blog.cryptogo.news/wp-json/wp/v2',
   enabled: true
 };
 
