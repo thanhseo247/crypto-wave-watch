@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 interface NewsCardProps {
   title: string;
@@ -9,11 +10,18 @@ interface NewsCardProps {
   timeAgo: string;
   image: string;
   readTime: string;
+  id?: number;
 }
 
-const NewsCard = ({ title, description, category, timeAgo, image, readTime }: NewsCardProps) => {
+const NewsCard = ({ title, description, category, timeAgo, image, readTime, id = 1 }: NewsCardProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/blog/${id}`);
+  };
+
   return (
-    <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
+    <Card className="hover:shadow-lg transition-shadow cursor-pointer group" onClick={handleClick}>
       <div className="aspect-video overflow-hidden rounded-t-lg">
         <img 
           src={image} 

@@ -70,6 +70,7 @@ const NewsList = () => {
         {newsData.map((news) => (
           <NewsCard
             key={news.id}
+            id={news.id}
             title={news.title}
             description={news.description}
             category={news.category}
