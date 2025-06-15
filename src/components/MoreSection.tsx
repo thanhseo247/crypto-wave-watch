@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, Users, Eye, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const MoreSection = () => {
   const marketStats = [
@@ -25,19 +26,22 @@ const MoreSection = () => {
       title: "Technical Analysis",
       description: "In-depth chart analysis and trading insights from crypto experts.",
       articles: 47,
-      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=200&fit=crop"
+      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=200&fit=crop",
+      link: "/technical-analysis"
     },
     {
       title: "Market Reports",
       description: "Weekly and monthly market reports with comprehensive data analysis.",
       articles: 23,
-      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=200&fit=crop"
+      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=200&fit=crop",
+      link: "/market-reports"
     },
     {
       title: "Industry News",
       description: "Latest developments from crypto companies and blockchain startups.",
       articles: 89,
-      image: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=200&fit=crop"
+      image: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=200&fit=crop",
+      link: "/industry-news"
     }
   ];
 
@@ -192,8 +196,10 @@ const MoreSection = () => {
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">{category.articles} articles</span>
-                    <Button variant="ghost" size="sm" className="text-orange-600 hover:text-orange-700">
-                      Explore →
+                    <Button asChild variant="ghost" size="sm" className="text-orange-600 hover:text-orange-700">
+                      <Link to={category.link}>
+                        Explore →
+                      </Link>
                     </Button>
                   </div>
                 </CardContent>

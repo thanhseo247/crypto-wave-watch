@@ -14,6 +14,9 @@ import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import TechnicalAnalysis from "./pages/TechnicalAnalysis";
+import MarketReports from "./pages/MarketReports";
+import IndustryNews from "./pages/IndustryNews";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +38,9 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/technical-analysis" element={<TechnicalAnalysis />} />
+          <Route path="/market-reports" element={<MarketReports />} />
+          <Route path="/industry-news" element={<IndustryNews />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
