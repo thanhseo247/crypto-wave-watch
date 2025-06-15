@@ -1,10 +1,14 @@
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
 import EthereumMoreSection from "@/components/EthereumMoreSection";
-import { TrendingUp } from "lucide-react";
+import PriceCard from "@/components/PriceCard";
+import { useSpecificCoinPrice } from "@/hooks/useCryptoPrices";
 
 const Ethereum = () => {
+  const { data: ethereumPrice, isLoading } = useSpecificCoinPrice('ethereum');
+
   const ethereumNews = [
     {
       id: 10,
@@ -49,21 +53,15 @@ const Ethereum = () => {
                 Discover the latest developments in Ethereum ecosystem, smart contracts, and DeFi innovations.
               </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <h3 className="text-2xl font-bold mb-4">Ethereum Price</h3>
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-3xl font-bold">$3,245</div>
-                  <div className="flex items-center text-green-300">
-                    <TrendingUp className="h-4 w-4 mr-1" />
-                    +3.8% (24h)
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm opacity-80">Market Cap</div>
-                  <div className="text-lg font-semibold">$390B</div>
-                </div>
-              </div>
+            <div>
+              <PriceCard
+                name="Ethereum"
+                symbol="ETH"
+                price={ethereumPrice?.current_price || 0}
+                change24h={ethereumPrice?.price_change_percentage_24h || 0}
+                marketCap={ethereumPrice?.market_cap}
+                isLoading={isLoading}
+              />
             </div>
           </div>
         </div>

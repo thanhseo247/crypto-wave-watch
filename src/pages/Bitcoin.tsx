@@ -1,10 +1,14 @@
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
 import BitcoinMoreSection from "@/components/BitcoinMoreSection";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import PriceCard from "@/components/PriceCard";
+import { useSpecificCoinPrice } from "@/hooks/useCryptoPrices";
 
 const Bitcoin = () => {
+  const { data: bitcoinPrice, isLoading } = useSpecificCoinPrice('bitcoin');
+
   const bitcoinNews = [
     {
       id: 7,
@@ -49,21 +53,15 @@ const Bitcoin = () => {
                 Stay updated with the latest Bitcoin developments, price movements, and institutional adoption news.
               </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
-              <h3 className="text-2xl font-bold mb-4">Bitcoin Price</h3>
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-3xl font-bold">$67,845</div>
-                  <div className="flex items-center text-green-300">
-                    <TrendingUp className="h-4 w-4 mr-1" />
-                    +5.2% (24h)
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm opacity-80">Market Cap</div>
-                  <div className="text-lg font-semibold">$1.34T</div>
-                </div>
-              </div>
+            <div>
+              <PriceCard
+                name="Bitcoin"
+                symbol="BTC"
+                price={bitcoinPrice?.current_price || 0}
+                change24h={bitcoinPrice?.price_change_percentage_24h || 0}
+                marketCap={bitcoinPrice?.market_cap}
+                isLoading={isLoading}
+              />
             </div>
           </div>
         </div>

@@ -1,11 +1,15 @@
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
 import MarketsMoreSection from "@/components/MarketsMoreSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import { useCryptoPrices } from "@/hooks/useCryptoPrices";
 
 const Markets = () => {
+  const { data: marketData, isLoading } = useCryptoPrices(['bitcoin', 'ethereum', 'solana', 'cardano', 'polygon-ecosystem-token', 'chainlink', 'avalanche-2', 'dogecoin']);
+
   const marketNews = [
     {
       id: 16,
@@ -36,10 +40,24 @@ const Markets = () => {
     }
   ];
 
+  // Calculate market stats from real data
+  const totalMarketCap = marketData?.reduce((sum, coin) => sum + coin.market_cap, 0) || 0;
+  const bitcoinDominance = marketData?.find(coin => coin.id === 'bitcoin')?.market_cap || 0;
+  const dominancePercentage = totalMarketCap > 0 ? (bitcoinDominance / totalMarketCap) * 100 : 0;
+
+  const formatMarketCap = (marketCap: number) => {
+    if (marketCap >= 1e12) {
+      return `$${(marketCap / 1e12).toFixed(2)}T`;
+    } else if (marketCap >= 1e9) {
+      return `$${(marketCap / 1e9).toFixed(2)}B`;
+    }
+    return `$${marketCap.toLocaleString()}`;
+  };
+
   const marketStats = [
     { 
       title: "Total Market Cap", 
-      value: "$2.54T", 
+      value: formatMarketCap(totalMarketCap), 
       change: "+5.2%", 
       trend: "up",
       description: "24h change"
@@ -53,14 +71,14 @@ const Markets = () => {
     },
     { 
       title: "Bitcoin Dominance", 
-      value: "53.2%", 
+      value: `${dominancePercentage.toFixed(1)}%`, 
       change: "-0.8%", 
       trend: "down",
       description: "Market share"
     },
     { 
       title: "Active Coins", 
-      value: "2,847", 
+      value: marketData?.length.toString() || "0", 
       change: "+23", 
       trend: "up",
       description: "Listed cryptocurrencies"
@@ -89,18 +107,27 @@ const Markets = () => {
                   <CardTitle className="text-lg font-medium">{stat.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold mb-1">{stat.value}</div>
-                  <div className={`flex items-center text-sm ${
-                    stat.trend === 'up' ? 'text-green-300' : 'text-red-300'
-                  }`}>
-                    {stat.trend === 'up' ? (
-                      <TrendingUp className="h-4 w-4 mr-1" />
-                    ) : (
-                      <TrendingDown className="h-4 w-4 mr-1" />
-                    )}
-                    {stat.change}
-                  </div>
-                  <div className="text-xs opacity-70 mt-1">{stat.description}</div>
+                  {isLoading ? (
+                    <div className="animate-pulse">
+                      <div className="h-8 bg-white/20 rounded mb-2"></div>
+                      <div className="h-4 bg-white/20 rounded"></div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="text-2xl font-bold mb-1">{stat.value}</div>
+                      <div className={`flex items-center text-sm ${
+                        stat.trend === 'up' ? 'text-green-300' : 'text-red-300'
+                      }`}>
+                        {stat.trend === 'up' ? (
+                          <TrendingUp className="h-4 w-4 mr-1" />
+                        ) : (
+                          <TrendingDown className="h-4 w-4 mr-1" />
+                        )}
+                        {stat.change}
+                      </div>
+                      <div className="text-xs opacity-70 mt-1">{stat.description}</div>
+                    </>
+                  )}
                 </CardContent>
               </Card>
             ))}

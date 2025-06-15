@@ -1,10 +1,13 @@
+
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsCard from "@/components/NewsCard";
 import AltcoinsMoreSection from "@/components/AltcoinsMoreSection";
-import { Badge } from "@/components/ui/badge";
+import { useCryptoPrices } from "@/hooks/useCryptoPrices";
 
 const Altcoins = () => {
+  const { data: altcoinsData, isLoading } = useCryptoPrices(['solana', 'cardano', 'polygon-ecosystem-token', 'chainlink']);
+
   const altcoinNews = [
     {
       id: 13,
@@ -35,12 +38,12 @@ const Altcoins = () => {
     }
   ];
 
-  const topAltcoins = [
-    { name: "Solana", symbol: "SOL", price: "$145.67", change: "+8.2%" },
-    { name: "Cardano", symbol: "ADA", price: "$0.48", change: "+4.1%" },
-    { name: "Polygon", symbol: "MATIC", price: "$0.92", change: "+6.7%" },
-    { name: "Chainlink", symbol: "LINK", price: "$14.32", change: "+2.8%" }
-  ];
+  const formatPrice = (price: number) => {
+    if (price >= 1) {
+      return `$${price.toFixed(2)}`;
+    }
+    return `$${price.toFixed(4)}`;
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -58,20 +61,33 @@ const Altcoins = () => {
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
               <h3 className="text-2xl font-bold mb-4">Top Altcoins</h3>
-              <div className="space-y-3">
-                {topAltcoins.map((coin) => (
-                  <div key={coin.symbol} className="flex items-center justify-between">
-                    <div>
-                      <div className="font-semibold">{coin.name}</div>
-                      <div className="text-sm opacity-80">{coin.symbol}</div>
+              {isLoading ? (
+                <div className="space-y-3">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="h-4 bg-white/20 rounded mb-2"></div>
+                      <div className="h-3 bg-white/20 rounded"></div>
                     </div>
-                    <div className="text-right">
-                      <div className="font-semibold">{coin.price}</div>
-                      <div className="text-sm text-green-300">{coin.change}</div>
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {altcoinsData?.map((coin) => (
+                    <div key={coin.id} className="flex items-center justify-between">
+                      <div>
+                        <div className="font-semibold">{coin.name}</div>
+                        <div className="text-sm opacity-80">{coin.symbol.toUpperCase()}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold">{formatPrice(coin.current_price)}</div>
+                        <div className={`text-sm ${coin.price_change_percentage_24h >= 0 ? 'text-green-300' : 'text-red-300'}`}>
+                          {coin.price_change_percentage_24h >= 0 ? '+' : ''}{coin.price_change_percentage_24h.toFixed(2)}%
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
