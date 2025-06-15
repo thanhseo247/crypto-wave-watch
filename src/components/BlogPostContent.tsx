@@ -1,20 +1,40 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, User, Share2, BookmarkPlus, Heart } from "lucide-react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useWordPressPost } from "@/hooks/useWordPressAPI";
 
 interface BlogPostContentProps {
   postId?: string;
 }
 
 const BlogPostContent = ({ postId }: BlogPostContentProps) => {
+  const { slug } = useParams();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likes, setLikes] = useState(124);
   const [isLiked, setIsLiked] = useState(false);
 
+  // Try to fetch from WordPress if we have a slug
+  const { data: wpPost, isLoading: wpLoading } = useWordPressPost(slug || '');
+
   // Mock data - in a real app, this would be fetched based on postId
-  const blogPost = {
+  const blogPost = wpPost ? {
+    id: wpPost.id.toString(),
+    title: wpPost.title.rendered,
+    content: wpPost.content.rendered,
+    author: {
+      name: wpPost._embedded?.author?.[0]?.name || "Unknown Author",
+      avatar: wpPost._embedded?.author?.[0]?.avatar_urls?.96 || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+      bio: "WordPress Author",
+      twitter: "@author"
+    },
+    publishDate: wpPost.date,
+    readTime: "5 min read",
+    category: wpPost._embedded?.['wp:term']?.[0]?.[0]?.name || "Crypto",
+    image: wpPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&h=600&fit=crop",
+    tags: wpPost._embedded?.['wp:term']?.[1]?.map((tag: any) => tag.name) || ["Cryptocurrency"]
+  } : {
     id: postId || "1",
     title: "Bitcoin Reaches New All-Time High as Institutional Adoption Surges",
     content: `
@@ -45,6 +65,22 @@ const BlogPostContent = ({ postId }: BlogPostContentProps) => {
     image: "https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=1200&h=600&fit=crop",
     tags: ["Bitcoin", "Institutional Adoption", "Market Analysis", "Cryptocurrency"]
   };
+
+  if (wpLoading) {
+    return (
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded mb-4"></div>
+          <div className="h-64 bg-gray-200 rounded mb-8"></div>
+          <div className="space-y-4">
+            <div className="h-4 bg-gray-200 rounded"></div>
+            <div className="h-4 bg-gray-200 rounded"></div>
+            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const handleLike = () => {
     setIsLiked(!isLiked);

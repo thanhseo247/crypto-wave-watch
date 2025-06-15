@@ -30,6 +30,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/post/:slug" element={<BlogPost />} />
           <Route path="/bitcoin" element={<Bitcoin />} />
           <Route path="/ethereum" element={<Ethereum />} />
           <Route path="/altcoins" element={<Altcoins />} />
