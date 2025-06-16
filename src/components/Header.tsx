@@ -16,7 +16,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <Bitcoin className="h-8 w-8 text-orange-500" />
-            <h1 className="text-2xl font-bold text-gray-900">CryptoGo</h1>
+            <p className="text-2xl font-bold text-gray-900">CryptoGo</p>
           </Link>
           
           <nav className="hidden md:flex items-center space-x-6">
