@@ -8,8 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Settings, Globe } from "lucide-react";
 
 const NewsList = () => {
-  const [wordpressUrl, setWordpressUrl] = useState('');
-  const [useWordPress, setUseWordPress] = useState(false);
+  const [wordpressUrl, setWordpressUrl] = useState('https://blog.cryptogo.news');
+  const [useWordPress, setUseWordPress] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
 
   const { data: wordpressPosts, isLoading: wpLoading, error: wpError } = useWordPressPosts({
